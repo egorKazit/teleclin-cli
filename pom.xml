@@ -12,8 +12,6 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <github.global.server>github</github.global.server>
-        <github.global.userName>egorKazit</github.global.userName>
     </properties>
 
     <dependencies>
@@ -142,7 +140,6 @@
                     </includes>
                     <repositoryName>teleclin-cli</repositoryName>
                     <repositoryOwner>egorKazit</repositoryOwner>
-                    <userName>egorKazit</userName>
                     <server>github</server>
                 </configuration>
                 <executions>
