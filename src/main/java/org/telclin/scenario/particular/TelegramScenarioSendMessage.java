@@ -32,13 +32,12 @@ class TelegramScenarioSendMessage extends TelegramScenarioAbstract<TdApi.Message
 
     @Override
     public TdApi.Function<? extends TdApi.Object> getNextUpdateFunction(TdApi.@NotNull Object object) {
-        switch (object.getConstructor()) {
-            case TdApi.UpdateMessageSendSucceeded.CONSTRUCTOR:
-                TdApi.UpdateMessageSendSucceeded updateMessageSendSucceeded = (TdApi.UpdateMessageSendSucceeded) object;
-                if (updateMessageSendSucceeded.oldMessageId == oldMessageId) {
-                    result = updateMessageSendSucceeded.message;
-                    return new SetMessageSent();
-                }
+        if (object.getConstructor() == TdApi.UpdateMessageSendSucceeded.CONSTRUCTOR) {
+            TdApi.UpdateMessageSendSucceeded updateMessageSendSucceeded = (TdApi.UpdateMessageSendSucceeded) object;
+            if (updateMessageSendSucceeded.oldMessageId == oldMessageId) {
+                result = updateMessageSendSucceeded.message;
+                return new SetMessageSent();
+            }
         }
         return null;
     }
