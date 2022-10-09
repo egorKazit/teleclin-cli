@@ -13,4 +13,8 @@ public class TelegramScenarioException extends Exception {
         super(throwable);
     }
 
+    public TelegramScenarioException(String message) {
+        super(message);
+    }
+
 }

@@ -14,7 +14,7 @@ public class TelegramScenarioPool<T extends TdApi.Object> {
     public static final TelegramScenarioPool<TdApi.User> FIND_ME = new TelegramScenarioPool<>(TdApi.User.class);
     public static final TelegramScenarioPool<TdApi.Object> LOAD_CHATS = new TelegramScenarioPool<>(TdApi.Object.class);
     public static final TelegramScenarioPool<TdApi.Object> DELETE_CHAT = new TelegramScenarioPool<>(TdApi.Object.class);
-    public static final TelegramScenarioPool<TdApi.Message> LOAD_MESSAGES = new TelegramScenarioPool<>(TdApi.Message.class);
+    public static final TelegramScenarioPool<TdApi.Messages> LOAD_MESSAGES = new TelegramScenarioPool<>(TdApi.Messages.class);
     public static final TelegramScenarioPool<TdApi.Message> SEND_MESSAGE_TEXT = new TelegramScenarioPool<>(TdApi.Message.class);
     public static final TelegramScenarioPool<TdApi.Message> SEND_MESSAGE_PHOTO = new TelegramScenarioPool<>(TdApi.Message.class);
     public static final TelegramScenarioPool<TdApi.Message> SEND_MESSAGE_AUDIO = new TelegramScenarioPool<>(TdApi.Message.class);
