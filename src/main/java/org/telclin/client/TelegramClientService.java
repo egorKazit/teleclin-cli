@@ -115,9 +115,15 @@ public class TelegramClientService {
     }
 
     @SuppressWarnings("unused")
-    public synchronized void loadMessages(long chatId) throws InterruptedException, TelegramScenarioException {
-        TdApi.Chat chat = getChat(chatId);
-        telegramScenarioDriver.startScenario(LOAD_MESSAGES, String.valueOf(chatId), String.valueOf(chat.lastMessage.id));
+    public synchronized TdApi.Messages loadMessages(long chatId, long messageId, int offset, int limit) throws InterruptedException, TelegramScenarioException {
+        if (offset > 0) {
+            throw new TelegramScenarioException("Parameter offset must be non-positive");
+        }
+        return telegramScenarioDriver.startScenario(LOAD_MESSAGES,
+                String.valueOf(chatId),
+                String.valueOf(messageId),
+                String.valueOf(offset),
+                String.valueOf(limit)).getResult();
     }
 
     @SuppressWarnings("unused")
@@ -150,7 +156,7 @@ public class TelegramClientService {
     public synchronized void downloadFile(int fileId) throws InterruptedException, TelegramScenarioException {
         telegramScenarioDriver.startScenario(DOWNLOAD_FILE, String.valueOf(fileId));
     }
-    
+
     @SuppressWarnings("unused")
     public synchronized void runCustomScenario(TelegramScenarioAbstract<? extends TdApi.Object> scenario,
                                                Consumer<TdApi.Object> hookOnFinish,

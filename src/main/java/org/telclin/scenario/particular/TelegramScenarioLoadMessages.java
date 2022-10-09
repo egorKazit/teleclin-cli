@@ -11,7 +11,7 @@ import org.telclin.tdlib.TdApi;
 public class TelegramScenarioLoadMessages extends TelegramScenarioAbstract<TdApi.Messages> {
     @Override
     public TdApi.@NonNull Function<? extends TdApi.Object> getFirstStepFunction(String @NotNull ... args) throws TelegramScenarioException {
-        return new TdApi.GetChatHistory(Long.parseLong(args[0]), Long.parseLong(args[1]), 0, 100, false);
+        return new TdApi.GetChatHistory(Long.parseLong(args[0]), Long.parseLong(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), false);
     }
 
     @Override
@@ -21,8 +21,9 @@ public class TelegramScenarioLoadMessages extends TelegramScenarioAbstract<TdApi
 
     @Override
     public TdApi.Function<? extends TdApi.Object> getNextRegularFunction(TdApi.@NotNull Object object) {
-        if (object.getConstructor() == TdApi.Messages.CONSTRUCTOR)
+        if (object.getConstructor() == TdApi.Messages.CONSTRUCTOR) {
             return new SetChatsLoaded();
+        }
         return null;
     }
 }
