@@ -14,9 +14,11 @@ import org.telclin.tdlib.TdApi;
 class TelegramScenarioLogIn extends TelegramScenarioAbstract<SetLoggedIn> {
 
 
-    private final String phoneNumber;
+    private String phoneNumber;
 
-    private final char[] password;
+    private char[] authenticationCode;
+
+    private char[] password;
 
     @Override
     public TdApi.Function<? extends TdApi.Object> getNextRegularFunction(TdApi.Object object) {
@@ -34,7 +36,7 @@ class TelegramScenarioLogIn extends TelegramScenarioAbstract<SetLoggedIn> {
                 String phoneNumberValue = phoneNumber != null ? phoneNumber : readLine("Please enter phone number: ");
                 return new TdApi.SetAuthenticationPhoneNumber(phoneNumberValue, null);
             case TdApi.AuthorizationStateWaitCode.CONSTRUCTOR:
-                return new TdApi.CheckAuthenticationCode(readLine("Please enter authentication code: "));
+                return new TdApi.CheckAuthenticationCode(authenticationCode != null ? String.valueOf(authenticationCode) : readLine("Please enter authentication code: "));
             case TdApi.AuthorizationStateWaitPassword.CONSTRUCTOR:
                 char[] passwordValue = password != null ? password : readPassword("Please enter password: ");
                 return new TdApi.CheckAuthenticationPassword(String.valueOf(passwordValue));
@@ -48,6 +50,12 @@ class TelegramScenarioLogIn extends TelegramScenarioAbstract<SetLoggedIn> {
 
     @Override
     public @NonNull TdApi.Function<? extends TdApi.Object> getFirstStepFunction(String... args) {
+        if (args.length > 0 && args[0] != null)
+            phoneNumber = args[0];
+        if (args.length > 1 && args[1] != null)
+            authenticationCode = args[1].toCharArray();
+        if (args.length > 2 && args[2] != null)
+            password = args[2].toCharArray();
         return new TdApi.GetOption("version");
     }
 

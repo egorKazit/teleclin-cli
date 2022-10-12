@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
@@ -63,9 +62,15 @@ public class TelegramClientService {
     }
 
     public static @NotNull TelegramClientService getInstance(String sessionName, int apiId, String apiHash) throws InterruptedException, TelegramScenarioException {
+        return getInstance(sessionName, apiId, apiHash, null, null, null);
+    }
+
+    public static @NotNull TelegramClientService getInstance(String sessionName, int apiId, String apiHash,
+                                                             String phoneNumber, char[] authenticationCode,
+                                                             char[] password) throws InterruptedException, TelegramScenarioException {
         TelegramClientService telegramClientService = new TelegramClientService(sessionName, apiId, apiHash);
         telegramClientServices.put(telegramClientService.telegramClient.getNativeClientId(), telegramClientService);
-        telegramClientService.authorize();
+        telegramClientService.authorize(phoneNumber, authenticationCode, password);
         return telegramClientService;
     }
 
@@ -170,8 +175,8 @@ public class TelegramClientService {
     }
 
 
-    private void authorize() throws TelegramScenarioException, InterruptedException {
-        telegramScenarioDriver.startScenario(LOG_IN);
+    private void authorize(String phoneNumber, char[] authenticationCode, char[] password) throws TelegramScenarioException, InterruptedException {
+        telegramScenarioDriver.startScenario(LOG_IN, phoneNumber, new String(authenticationCode), new String(password));
     }
 
     int getTelegramClientId() {
