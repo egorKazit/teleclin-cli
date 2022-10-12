@@ -174,7 +174,7 @@ public class TelegramScenarioDriver {
             reactOnRegularEvent(eventObject, newCurrentQueryId, associatedTelegramScenarioWrapper);
         } else {
             // trace non-update events with id that is different from expected
-            log.atError().log("Event {} is ignored for object {}", eventId, eventObject);
+            log.atTrace().log("Event {} is ignored for object {}", eventId, eventObject);
         }
     }
 
