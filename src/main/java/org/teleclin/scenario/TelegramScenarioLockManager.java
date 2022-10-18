@@ -26,8 +26,8 @@ public final class TelegramScenarioLockManager {
      * @throws InterruptedException exception on lock set
      */
     public void lockForCondition(int waitForObjectId) throws InterruptedException {
-        operationFlag.lock();
         this.waitForObjectId = 0;
+        operationFlag.lock();
         try {
             while (this.waitForObjectId != waitForObjectId) {
                 gotAuthorization.await();

@@ -106,6 +106,8 @@ public abstract class TelegramScenarioAbstract<R extends TdApi.Object> {
 
     @SuppressWarnings("all")
     public TdApi.Function<? extends Object> getFunctionForLastSuccessObject() {
+        if (lastSuccessObject == null)
+            return null;
         if (isLastFunctionUpdate) {
             return getNextUpdateFunction(lastSuccessObject);
         } else {

@@ -109,9 +109,9 @@ public class TelegramScenarioDriver {
         long ownCurrentQueryId = currentQueryId.incrementAndGet();
         synchronized (scenarios) {
             scenarios.put(ownCurrentQueryId, new TelegramScenarioWrapper(newScenario, isDialog, hookOnFinish));
+            // send the first function of scenario
+            functionPool.getSendFunction().accept(ownCurrentQueryId, newScenario.getFirstStepFunction(args));
         }
-        // send the first function of scenario
-        functionPool.getSendFunction().accept(ownCurrentQueryId, newScenario.getFirstStepFunction(args));
         // lock the current thread if running in dialog
         if (isDialog) {
             telegramScenarioLockManager.lockForCondition(newScenario.getLastStepObject().getConstructor());
