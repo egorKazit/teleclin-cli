@@ -20,13 +20,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11.0
-          server-username: ${{ secrets.MAVEN_USERNAME }}
-          server-password: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
-          servers: |
-            [{ "id": "github",
-              "username": "${{ secrets.MAVEN_USERNAME }}",
-              "password": "${{ secrets.MAVEN_CENTRAL_TOKEN }}"
-            }]
+          servers: '[{ "id": "github", "username": ${{ secrets.MAVEN_USERNAME }}, "password": ${{ secrets.MAVEN_CENTRAL_TOKEN }} }]'
+          mirrors: '[{"id": "central-repo", "name": "Central Maven", "mirrorOf": "central", "url": "https://repo1.maven.org/maven2"},{"id": "github", "name": "Git Repo", "mirrorOf": "*", "url": "https://maven.pkg.github.com/egorKazit/teleclin-cli"}]'
       - name: Deploy
         run: mvn -B clean deploy
         env:
