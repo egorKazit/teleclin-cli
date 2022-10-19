@@ -25,4 +25,4 @@ jobs:
       - name: Deploy
         run: mvn -B clean deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
