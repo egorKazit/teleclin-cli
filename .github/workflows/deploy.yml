@@ -1,5 +1,5 @@
 
-name: Maven Build
+name: Deployment
 
 # Controls when the workflow will run
 on:
@@ -9,7 +9,7 @@ on:
       - develop
 
 jobs:
-  build:
+  deploy:
 
     runs-on: ubuntu-latest
 
