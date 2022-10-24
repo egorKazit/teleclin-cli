@@ -36,8 +36,7 @@ final class TelegramClient {
      * @param apiHash               api hash
      */
     TelegramClient(TelegramClientService telegramClientService, String sessionName, int apiId, String apiHash) {
-        this(telegramClientService, apiId, apiHash, TelegramClientLogInfo.builder()
-                .logFile(new File(TelegramClientService.getWorkingDirectory(), "connection/tdlib-" + sessionName + ".log").getPath()).build());
+        this(telegramClientService, apiId, apiHash, TelegramClientLogInfo.getTelegramClientLogInfo(sessionName));
     }
 
     /**

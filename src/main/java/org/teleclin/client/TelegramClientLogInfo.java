@@ -1,6 +1,9 @@
 package org.teleclin.client;
 
+import java.io.File;
 import java.nio.file.Path;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +18,8 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class TelegramClientLogInfo {
 
+    private static final ConcurrentMap<String, TelegramClientLogInfo> telegramClientLogInfoHolder = new ConcurrentHashMap<>();
+
     @NonNull
     final String logFile;
     @Builder.Default
@@ -25,6 +30,17 @@ public class TelegramClientLogInfo {
     @Contract(" -> new")
     public static @NotNull TelegramClientLogInfoBuilder builder() {
         return new TelegramClientLogInfoExtendedBuilder();
+    }
+
+    public static void addTelegramClientLogInfo(String sessionName, TelegramClientLogInfo telegramClientLogInfo) {
+        telegramClientLogInfoHolder.put(sessionName, telegramClientLogInfo);
+    }
+
+    public static TelegramClientLogInfo getTelegramClientLogInfo(String sessionName) {
+        return telegramClientLogInfoHolder.computeIfAbsent(sessionName, s ->
+                TelegramClientLogInfo.builder()
+                        .logFile(new File(TelegramClientService.getWorkingDirectory(), "connection/tdlib-" + sessionName + ".log").getPath()).build()
+        );
     }
 
     public static class TelegramClientLogInfoExtendedBuilder extends TelegramClientLogInfoBuilder {

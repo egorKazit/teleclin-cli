@@ -23,7 +23,6 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.teleclin.scenario.TelegramScenarioDriver;
 import org.teleclin.scenario.TelegramScenarioException;
@@ -68,8 +67,7 @@ public class TelegramClientService {
         return telegramClientService;
     }
 
-    @SneakyThrows
-    public TelegramClientService(String sessionName, int apiId, @NotNull String apiHash) {
+    private TelegramClientService(String sessionName, int apiId, @NotNull String apiHash) {
         TelegramClientResponseReceiver.isRunning = true;
         telegramClient = new TelegramClient(this, sessionName, apiId, apiHash);
         TelegramScenarioFunctionPool telegramScenarioFunctionPool = new TelegramScenarioFunctionPool(telegramClient::send, chats::put, secretChats::put, chats::get, secretChats::get);
