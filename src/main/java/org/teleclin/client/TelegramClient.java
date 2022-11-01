@@ -73,7 +73,8 @@ final class TelegramClient {
      */
     void send(long currentQueueId, TdApi.Function<?> function) {
         nativeClient.send(currentQueueId, function);
-        log.atInfo().log("A message {} was sent with id {}", function, currentQueueId);
+        String functionName = function.getClass().getSimpleName();
+        log.atInfo().log("A message {} was sent with id {}", functionName, currentQueueId);
     }
 
     /**
